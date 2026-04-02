@@ -235,6 +235,23 @@ let maps = [
 		},
 	},
 	{
+		name: "Overture Maps",
+		category: MAIN_CATEGORY,
+		default_check: true,
+		domain: "explore.overturemaps.org",
+		description: "Overture Maps Explorer",
+		getUrl(lat, lon, zoom) {
+			return "https://explore.overturemaps.org/?mode=explore#" + zoom + "/" + lat + "/" + lon;
+		},
+		getLatLonZoom(url) {
+			const match = url.match(/explore\.overturemaps\.org\/\?mode=explore#(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+			if (match) {
+				const [, zoom, lat, lon] = match;
+				return [lat, normalizeLon(lon), Math.round(Number(zoom))];
+			}
+		},
+	},
+	{
 		name: "地理院地図",
 		category: MAIN_CATEGORY,
 		default_check: true,
